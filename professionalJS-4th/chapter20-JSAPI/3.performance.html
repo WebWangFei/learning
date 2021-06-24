@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>performance</title>
+  </head>
+  <style></style>
+  <body></body>
+</html>
+<script>
+  const relativeTimestamp = performance.now();
+  const absoluteTimestamp = performance.timeOrigin + relativeTimestamp;
+  console.log('-log- ~ relativeTimestamp', relativeTimestamp);
+  console.log('-log- ~ absoluteTimestamp', absoluteTimestamp);
+  // 性能时间线
+  const entry = performance.getEntries()[0];
+  console.log(performance.getEntries()[0]);
+  for (const key in entry) {
+    console.log(`${key}:${entry[key]}`);
+  }
+</script>

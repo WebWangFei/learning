@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script type="module" src="./a.js">
+    // 模块是单例
+    // ES6 模块默认在严格模式下执行
+    // 模块顶级 this 的值是 undefined
+    // ES6 模块是异步加载和执行的
+
+    // 导出语句必须在模块顶级，不能嵌套在某个块中
+    // if (true) {
+    //     export a = 1
+    // }
+  </script>
+  <script type="module" src="./b.js"></script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>客户端检测</title>
+  </head>
+  <body>
+    <div id="app">
+      <h3>浏览器版本内核</h3>
+      <ul>
+        <li v-for="(item, index) in browserList" :key="index">
+          {{item.name }} -- {{item.type }}
+        </li>
+      </ul>
+      <h3>客户端检测</h3>
+      <h4>浏览器信息：</h4>
+      <ul>
+        <li v-for="(value,key,index) in browserInfo" :key="index">
+          <span>{{key}}</span>
+          <div v-for="(value1,key1, index1) in value" :key="index1">
+            {{key1}}:{{value1}}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.min.js"></script>
+<script src="./bowser.js"></script>
+<script>
+  let vm = new Vue({
+    el: "#app",
+    data() {
+      return {
+        browserInfo: null,
+        browserList: [
+          {
+            name: "IE",
+            type: "trident",
+          },
+          {
+            name: "Firefox",
+            type: "Gecko",
+          },
+          {
+            name: "Safari",
+            type: "WebKit",
+          },
+          {
+            name: "Chrome",
+            type: "渲染引擎: Blink, js引擎: V8",
+          },
+        ],
+      };
+    },
+  });
+  vm.browserInfo = bowser.getParser(window.navigator.userAgent)["parsedResult"];
+</script>

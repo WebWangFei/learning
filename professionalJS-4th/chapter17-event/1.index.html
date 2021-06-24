@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event</title>
+  </head>
+  <style>
+    img {
+      width: 300px;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <button class="btn">btn</button>
+      <button class="btn1">btn addEventListener</button>
+      <a id="link" href="https://www.baidu.com">百度</a>
+      <div>
+        <h3>img onload</h3>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  // 事件流
+  /**
+  * @Description: DOm事件流(IE8不支持)
+  *三个阶段
+  1.事件捕获
+  2.到达目标
+  3.事件冒泡
+  */
+  const btn = document.querySelector('.btn');
+  const btn1 = document.querySelector('.btn1');
+  const link = document.querySelector('#link');
+  // DOM0方式的事件
+  // btn.onclick = function () {
+  //   console.log('btn clicked');
+  // };
+  // // // 解除按钮点击事件
+  // btn.onclick = null
+
+  // DOM2级事件
+  // 1，addEventListener/removeEventListener
+  // 2.可以添加多次事件
+  // 3.取消事件时，必须保持与添加事件一致的参数才能有效
+  btn.addEventListener(
+    'click',
+    () => {
+      console.log('--btn-clicked-');
+    },
+    false
+  );
+  btn.addEventListener(
+    'click',
+    () => {
+      console.log('--btn-clicked-2');
+    },
+    false
+  );
+  // 3
+  const handle = () => console.log('addEventListener');
+  btn1.addEventListener('click', handle, false);
+  btn1.removeEventListener('click', handle, false);
+
+  // preventDefault();
+
+  link.onclick = (e) => {
+    // 阻止默认行为
+    e.preventDefault();
+    // 防止冒泡
+    // e.stopPropagation();
+  };
+  document.body.onclick = function (event) {
+    console.log('Body clicked');
+  };
+
+  // img load
+  window.addEventListener('load', () => {
+    console.log(111);
+    // const imgEle = document.createElement('img');
+    const imgEle = new Image()
+    imgEle.addEventListener('load', () => {
+      console.log('--img--loaded');
+    });
+    document.body.appendChild(imgEle);
+    setTimeout(() => {
+      imgEle.src = 'https://us1.myximage.com/2021/06/15/ac90cedd49f043420f6fa23053af9ab5.gif';
+    }, 2000);
+  });
+</script>

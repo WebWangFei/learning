@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  /**
+   * @Description: Selectors API
+   * querySelector(), querySelectorAll()
+   *
+   * querySelector与document.getElementByTag区别
+   *
+   * 1.querySelector接受css选择器，document.getElementByTagName接受标签
+   * 2.querySelector返回的是静态集合，之后操作的文档不会影响集合，后者是动态集合，实施的获取页面中符合
+   *
+   * querySelector
+   * 接收 CSS 选择符参数，返回匹配该模式的第一个后代元素
+   * 在 Document 上使用 querySelector()方法时，会从文档元素开始搜索;在 Element 上使用 querySelector()方法时，则只会从当前元素的后代中查询
+   *
+   * querySelectorAll 返回的是一个 NodeList 的静态实例
+   *
+   */
+  let body = document.querySelector("body");
+  console.log("--🚀-- ~ body", body);
+  // 取得类名为"button"的图片
+  let img = document.body.querySelector("img.button");
+</script>

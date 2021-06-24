@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>error</title>
+  </head>
+  <body></body>
+  <script>
+    // try {
+    //   console.log('success');
+    // } catch (error) {
+    //   console.log('error');
+    // } finally {
+    //   // 失败成功都会走的
+    //   console.log(222);
+    // }
+
+    //----------------
+    // 只要代码中包含了finally子句，try块或catch块中的return语句就会被忽 略
+    function foo() {
+      try {
+        //   不会返回
+        aa;
+        return 'success';
+      } catch (e) {
+        //TODO handle the exception
+        throw new Error(e);
+      } finally {
+        console.log('~~finally~~');
+      }
+    }
+    foo();
+
+    // error 种类
+    /**
+   * @Description: error 种类
+   * Error：基类型，其他错误类型继承该类型
+     InternalError  EvalError
+     RangeError
+     ReferenceError：找不到对象时发生--object expected ---- let obj = x
+     SyntaxError：给 eval()传入的字符串包含 JavaScript 语法错误时发生--eval("a ++ b")
+     TypeError
+     URIError
+   * 
+   */
+    function logError(sev, msg) {
+      let img = new Image(),
+        encodedSev = encodeURIComponent(sev),
+        encodedMsg = encodeURIComponent(msg);
+      img.src = 'log.php?sev=${encodedSev}&msg=${encodedMsg}';
+    }
+  </script>
+</html>

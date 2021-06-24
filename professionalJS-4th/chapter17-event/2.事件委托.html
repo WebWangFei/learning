@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <ul class="ul">
+        <li id="1">evnet1</li>
+        <li id="2">event2</li>
+        <li id="3">event3</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    // 事件委托,给所有元素的祖先节点添加处理程序即可
+    //适合使用事件委托的事件包括:click、mousedown、mouseup、keydown 和 keypress
+    const ul = document.querySelector('.ul');
+    ul.addEventListener('click', (e) => {
+      switch (e.target.id) {
+        case '1':
+          console.log('--li--1--clicked-');
+          break;
+        case '2':
+          console.log('--li--2--clicked-');
+          break;
+        case '3':
+          console.log('--li--3--clicked-');
+          break;
+      }
+    });
+  </script>
+</html>

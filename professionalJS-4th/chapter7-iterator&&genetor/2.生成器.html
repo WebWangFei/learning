@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    generator生成器对象
+  </body>
+  <script>
+    /* generator
+     * 1.函数前面加一个*，
+     * 2.星号不受两侧空格的影响
+     * 3.与iterator类似，也有next()方法，返回的值为函数返回的值
+     * 4.生成器函数只会在初始调用next()方法后才会开始执行
+     * 5.yield中断执行
+     * 6.在一个生成器对象上调用 next() 不会影响其他生成器
+     * 7.yield 关键字只能在生成器函数内部使用
+     * 8.生成器对象作为可迭代对象进行迭代使用
+     * 9.yield 实现输入和输出
+     * 10.使用星号增强 yield 的行为，让它能够迭代一个可迭代对象，一次产生一个值
+     */
+    //------1--------
+    // 生成器函数声明
+    function* generator() {
+      console.log("----generatorlog---");
+      return "foo";
+    }
+
+    // 生成器函数表达式
+    let generatorFn = function* () {};
+
+    // 作为对象字面量方法的生成器函数
+    let foo = {
+      *generatorFn() {},
+    };
+
+    // 作为类实例的生成器函数
+    class Foo {
+      *sayName() {}
+    }
+    // 作为静态方法的生成器函数
+    class Person {
+      static *sayName() {}
+    }
+
+    // ------4--------
+    generator(); // 此时不会打印‘----generatorlog---’因为第四点
+    const generateNext = generator().next();
+    // 执行函数中的逻辑
+    console.log("--🚀-- ~ generateNext", generateNext);
+    // {value: "foo", done: true}
+
+    // ------5--------
+    function* generatorFn1() {
+      yield "foo";
+      yield "bar";
+      return "baz";
+    }
+    let generatorObject = generatorFn1();
+    let generatorObject1 = generatorFn1();
+    // console.log(generatorObject.next()); //{value: "foo", done: false}
+    // console.log(generatorObject.next()); //{value: "bar", done: false}
+    // console.log(generatorObject.next()); //{value: "baz", done: true}
+
+    // ------6-------
+    console.log(generatorObject.next()); //{value: "foo", done: false}
+    console.log(generatorObject1.next()); //{value: "foo", done: false}
+    // ------7-------
+    // 无效
+    function* invalidGeneratorFnB() {
+      const b = () => {
+        yield;
+      };
+    }
+    // 无效
+    function* invalidGeneratorFnC() {
+      (() => {
+        yield;
+      })();
+    }
+
+    // ------8-------
+    function* iteratorGenerator() {
+      yield 1;
+      yield 2;
+      yield 3;
+    }
+    for (const iterator of iteratorGenerator()) {
+      console.log("--🚀-- ~ iterator", iterator);
+      //   1 2 3
+    }
+    // 生成器
+    function* nTimes(n) {
+      while (n--) {
+        yield;
+      }
+    }
+    for (const count of nTimes(3)) {
+      console.log("--🚀-- ~ count");
+      //打印三次，完成在迭代里执行的任务
+    }
+
+    //  ------9-------
+
+    function* generatorFn1(initial) {
+      console.log("---generatorFn1----");
+      console.log(initial);
+      console.log(yield);
+      console.log(yield);
+    }
+
+    let generatorObject11 = generatorFn1("initalValue");
+    // 第一次调用 next()传入的值不会被使用，因为这一次调用是为了开始执行生成器函数:
+    generatorObject11.next("asd"); // initalValue
+    generatorObject.next("baz"); //  baz
+    generatorObject.next("qux"); // qux
+
+    // yield 关键字可以同时用于输入和输出，如下例所示
+    function* generatorBoth() {
+      console.log("---generatorBoth---");
+      //   遇到 yield 关键字时暂停执行并 计算出要产生的值:foo
+      return yield "foo";
+    }
+    const res1 = generatorBoth();
+    console.log("--🚀-- ~ res1", res1.next()); //foo
+
+    // 接受next传递的值并返回
+    console.log("--🚀-- ~ res1", res1.next("bar")); //bar
+
+    // ------10-------
+    function* generatorFn() {
+      // 与generator函数一行，星号位置不影响执行结果
+      //   yield *[1, 2, 3];
+      yield* [1, 2, 3];
+    }
+    let generatorObject = generatorFn();
+    for (const x of generatorFn()) {
+      console.log(x); //1 2 3
+    }
+  </script>
+</html>

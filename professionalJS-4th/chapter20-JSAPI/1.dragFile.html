@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>requestAnimationFrame</title>
+  </head>
+  <style>
+    #droptarget {
+      width: 100px;
+      margin: 100px auto 0;
+      height: 100px;
+      border: 1px solid #f00;
+    }
+    #output {
+      width: 100px;
+      margin: 200px auto;
+      height: 100px;
+      border: 1px solid rgb(7, 44, 212);
+    }
+  </style>
+  <body>
+    <div id="droptarget"></div>
+    <div id="output"></div>
+  </body>
+</html>
+<script>
+  let droptarget = document.getElementById('droptarget');
+  function handleEvent(event) {
+    let info = '',
+      output = document.getElementById('output'),
+      files,
+      i,
+      len;
+    event.preventDefault();
+    if (event.type == 'drop') {
+      files = event.dataTransfer.files;
+      console.log('-log- ~ files', files);
+      i = 0;
+      len = files.length;
+      while (i < len) {
+        info += `${files[i].name} (${files[i].type}, ${files[i].size} bytes)<br>`;
+        i++;
+      }
+      output.innerHTML = info;
+    }
+  }
+  droptarget.addEventListener('dragenter', handleEvent);
+  droptarget.addEventListener('dragover', handleEvent);
+  droptarget.addEventListener('drop', handleEvent);
+</script>

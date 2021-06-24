@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #spanEle {
+      color: orange;
+      display: block;
+    }
+    .divBox {
+      color: palegreen;
+    }
+  </style>
+  <body>
+    <div id="wrap">
+      13
+      <div id="divEle">div</div>
+      <span id="spanEle">span</span>
+      <div class="divBox">class div1</div>
+      <div class="divBox">class div2</div>
+      <div id="myList"></div>
+    </div>
+  </body>
+  <script>
+    let wrap = document.getElementById("wrap");
+    let divEle = document.getElementById("divEle");
+    console.log(
+      "--🚀-- ~ wrap",
+      wrap.nodeValue,
+      wrap.nodeType,
+      Node.ELEMENT_NODE
+    );
+    let firstChild = wrap.childNodes[0];
+    console.log("--🚀-- ~ firstChild", firstChild);
+    let secondChild = wrap.childNodes.item(1);
+    console.log("--🚀-- ~ secondChild", secondChild);
+    let count = wrap.childNodes.length;
+    console.log("--🚀-- ~ count", count);
+    let arrayNodes = Array.from(wrap.childNodes);
+    console.log("--🚀-- ~ arrayNodes", arrayNodes);
+
+    console.log("---parentNode---", divEle.parentNode);
+    const createEle = document.createElement("div");
+
+    // appendChild：如果传给在文档中已经存在的元素，则原始的元素会被转移到新的位置
+    createEle.innerHTML = "我是插入的元素";
+    createEle.style.color = "red";
+    wrap.appendChild(createEle);
+
+    /**
+     * @Description: Document类型
+     * nodeType:9
+     * nodeName:'#document'
+     *
+     * html元素是document文档节点的第一个子元素也是唯一一个
+     *
+     * body元素
+     */
+    let documentEleArr = document;
+    console.log(
+      "--🚀-- ~ documentE nodeType,nodeName,nodeValue",
+      documentEleArr["nodeType"],
+      documentEleArr["nodeName"],
+      documentEleArr["nodeValue"]
+    );
+
+    // html元素的引用
+    const htmlEle = document.documentElement;
+    console.log("--🚀-- ~ htmlEle", htmlEle);
+    console.log("document childNote", document.firstChild, htmlEle);
+
+    // body元素
+    const bodyEle = document.body;
+    console.log("--🚀-- ~ bodyEle", bodyEle);
+
+    //DOCTYPE
+    const DOCTYPE = document.doctype;
+    console.log("--🚀-- ~ DOCTYPE", DOCTYPE);
+
+    /**
+     * @Description: Element类型
+     *
+     *
+     */
+    let divEle1 = document.getElementById("divEle");
+    console.log(
+      "--🚀-- ~ element nodeType nodeName",
+      divEle1.nodeType,
+      divEle1.nodeName
+    );
+
+    /**
+     * @Description:  Text类型
+     * nodeType:3
+     * @return {*}
+     */
+
+    /**
+     * @Description: Comment类型
+     * nodeType:8
+     * @return {*}
+     */
+
+    /**
+     * @Description: DocumentFragment
+     * nodeType:11
+     *
+     */
+    let fragment = document.createDocumentFragment();
+    let ul = document.getElementById("myList");
+    for (let i = 0; i < 3; ++i) {
+      let li = document.createElement("li");
+      li.appendChild(document.createTextNode(`Item ${i + 1}`));
+      fragment.appendChild(li);
+    }
+    ul.appendChild(fragment);
+  </script>
+</html>

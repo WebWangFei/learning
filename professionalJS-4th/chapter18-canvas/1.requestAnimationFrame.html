@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>requestAnimationFrame</title>
+  </head>
+  <style></style>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+<script>
+  // 一般屏幕的刷新率为60HZ,意味着每秒需要重绘60次，
+  // 1000ms/60 = 16 ，一次需要花费16ms的事件，动画最好在16ms以内渲染完成最流畅
+
+  var then = Date.now();
+  var count = 0;
+  // 计算实时刷新率(FPS)
+
+  function nextFrame() {
+    requestAnimationFrame(function () {
+      count++;
+      if (count % 20 === 0) {
+        var time = ((Date.now() - then) / count).toFixed(2);
+        // var ms = Math.round(time * 1000) / 1000;
+        var fps = Math.round(100000 / time) / 100;
+        console.log(`count: ${count}\t${time}ms/frame\t${fps}fps`);
+      }
+      nextFrame();
+    });
+  }
+  // nextFrame();
+</script>

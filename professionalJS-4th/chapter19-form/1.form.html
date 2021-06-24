@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>requestAnimationFrame</title>
+  </head>
+  <style></style>
+  <body>
+    <form action="" id="form">
+      <input type="text" name="username" required />
+      <input type="number" step="5" min="0" name="count" max="20" />
+      <br />
+      <button type="submit">submit btn</button>
+      <input type="submit" value="submit" />
+
+      <br />
+      <button id="resetBtn" type="reset">reset btn</button>
+    </form>
+  </body>
+</html>
+<script>
+  const form = document.querySelector('#form');
+  const resetBtn = document.querySelector('#resetBtn');
+  form.addEventListener('submit', (e) => {
+    // 阻止表单默认提交
+    // e.preventDefault();
+  });
+  // form.submit();
+</script>

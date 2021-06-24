@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 自定义iterator接口
+  /**
+   * iterator规则
+   * 1.调用next方法，有两个参数，value-当前的值，done:是否结束标识
+   * 2.具有Symbol.iterator方法
+   * 3.可以终止return
+
+   */
+  class Counter {
+    constructor(limit) {
+      this.count = 1;
+      this.limit = limit;
+    }
+    next() {
+      if (this.count <= this.limit) {
+        return { value: this.count++, done: false };
+      } else {
+        return { value: undefined, done: true };
+      }
+    }
+    [Symbol.iterator]() {
+      return this;
+    }
+  }
+  let a = new Counter(3);
+  for (let s of a) {
+    console.log("--🚀-- ~ s", s);
+  }
+  // Counter类里的count变量在实例化且迭代之后已经改变，不能进行多次调用
+  for (let s of a) {
+    console.log("--🚀-- ~ 22", s);
+    // 空值
+  }
+
+  // 2.0版本
+
+  class Counter1 {
+    constructor(limit) {
+      this.limit = limit;
+    }
+    [Symbol.iterator]() {
+      // 变量每次实例化之后进行初始化
+      let count = 1,
+        limit = this.limit;
+      return {
+        next() {
+          if (count <= limit) {
+            return { value: count++, done: false };
+          } else {
+            return { value: undefined, done: true };
+          }
+        },
+        // 必须有返回值
+        return() {
+          return { done: true };
+        },
+      };
+    }
+  }
+  const arr = ["draven", "miya"];
+  console.log("--🚀-- ~ arr", arr);
+  const iter1 = arr[Symbol.iterator]();
+  console.log("--🚀-- ~ iter1", iter1);
+  const iter2 = iter1[Symbol.iterator]();
+  // 每个迭代器内部也实现了Symbol[terator]
+  console.log("--🚀-- ~ iter2", iter2 === iter1);
+  const count = new Counter1(3);
+  for (const iterator of count) {
+    console.log("--🚀-- ~ iterator1", iterator);
+  }
+  for (const iterator of count) {
+    console.log("--🚀-- ~ iterator2", iterator);
+  }
+</script>
