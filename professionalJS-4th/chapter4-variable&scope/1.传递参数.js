@@ -20,4 +20,4 @@ function setName(obj) {
 }
 let person = new Object();
 setName(person);
-console.log(111, person);
+console.log(222, person);
