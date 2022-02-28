@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 1.默认绑定-window
+
+  function foo() {
+    // "use strict";不会影响this绑定
+    console.log(this.a);
+  }
+  var a = 2;
+  foo();
+
+  // 2.隐式绑定,与最近的上下文对象
+  // 只与函数的调用上一层有关
+  function foo1() {
+    console.log(this.a);
+  }
+  var obj = {
+    a: 22,
+    foo: foo1,
+  };
+  var obj2 = {
+    a: 33,
+    obj,
+  };
+  obj.foo(); //22
+  obj2.obj.foo(); //22
+
+  // 2-1:隐式丢失
+  function foo3() {
+    console.log("--隐式丢失1--", this.b);
+  }
+  var obj3 = {
+    b: 1,
+    foo3,
+  };
+  // 虽然赋值为obj3.foo3，其实还是引用的foo3函数，所以this->window
+  var bar = obj3.foo3;
+  var b = 11;
+  bar();
+  // 2-2:隐式丢失-回调函数
+  function foo4() {
+    console.log("--隐式丢失--回调函数传参", this.b1);
+  }
+  function doFoo4(fn) {
+    fn();
+  }
+  var obj4 = {
+    b1: 4,
+    // 引用的foo4
+    foo4,
+  };
+  var b1 = 44;
+  // 函数传参为隐式赋值
+  doFoo4(obj4.foo4);
+
+  // 3.显示绑定
+
+  function child() {
+    console.log("---显示绑定---", this.age);
+  }
+  var attrs = {
+    age: 12,
+  };
+  child.call(attrs);
+  // child.apply(attrs);
+
+  // 4.硬绑定
+
+  function child1() {
+    console.log("---硬绑定---", this.height);
+  }
+  var attrs1 = {
+    height: 140,
+  };
+  var bar1 = function () {
+    child1.apply(attrs1);
+  };
+  var height = 'window height'
+  bar1();
+  setTimeout(bar1, 100); //不会改变this指向
+  bar1.call(window); //不会改变this指向
+
+  // 4-1.重复使用的辅助函数
+  function hero(name) {
+    console.log("--bind最初原型--", name, this.skill);
+  }
+  function bind(fn, obj) {
+    return function () {
+      return fn.apply(obj, arguments);
+    };
+  }
+  var heroAttr = {
+    skill: "lauth",
+  };
+  var initHero = bind(hero, heroAttr);
+  initHero("draven");
+
+  // 4-2:bind函数
+  function hero1(skill) {
+    console.log("--bind---", this.name, skill);
+  }
+  var heroAttr1 = {
+    name: "miya",
+  };
+  var initHero1 = hero1.bind(heroAttr1);
+  initHero1("jump");
+
+  // 5:new构造函数 ->this绑定到新创建的对象上
+
+  //---------------this绑定的优先级-----
+
+  // new > 硬绑定(call/apply) > 上下文对象调用 > 隐式绑定 > 默认绑定
+
+  // 例外情况
+  // (1):call/apply传入null/undefined时，采用的是默认绑定
+</script>

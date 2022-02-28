@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 根据外层（函数或者全局）作用域来决定this
+  // 继承外层函数调用的this进行绑定
+  // 箭头函数一旦绑定后，则无法修改
+  function hero() {
+    return () => {
+      console.log("--箭头函数this--", this.skill);
+    };
+  }
+  var skill1 = {
+    skill: "laugh",
+  };
+  var skill2 = {
+    skill: "jump",
+  };
+  var hero1 = hero.call(skill1);
+  hero1.call(skill2); //laugh
+</script>
